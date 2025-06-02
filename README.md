@@ -393,10 +393,6 @@ npm test
 - Ensure all tests pass before submitting PR
 - Use meaningful commit messages
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - [React](https://reactjs.org/) - Frontend framework
