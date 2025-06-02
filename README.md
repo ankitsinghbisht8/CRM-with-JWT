@@ -1,8 +1,8 @@
-# Xeno CRM 🚀
+# CRM 🚀
 
-A modern, full-stack Customer Relationship Management (CRM) system built with React and Node.js. Xeno CRM helps businesses manage customers, track orders, create targeted campaigns, and analyze customer behavior with AI-powered insights.
+A modern, full-stack Customer Relationship Management (CRM) system built with React and Node.js. CRM helps businesses manage customers, track orders, create targeted campaigns, and analyze customer behavior with AI-powered insights.
 
-![Xeno CRM Dashboard](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![CRM Dashboard](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![React](https://img.shields.io/badge/React-18+-blue)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
@@ -317,6 +317,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by [Your Name]**
+**Built with ❤️ by Ankit Singh Bisht**
 
-*Xeno CRM - Empowering businesses with intelligent customer relationships*
+*CRM - Empowering businesses with intelligent customer relationships*
