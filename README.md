@@ -410,7 +410,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Documentation**: Check the `/docs` folder for detailed guides
 - **Issues**: Report bugs on [GitHub Issues](https://github.com/yourusername/xeno-crm/issues)
-- **Discussions**: Join [GitHub Discussions](https://github.com/yourusername/xeno-crm/discussions)
+- **Discussions**: Join [GitHub Discussions](https://github.com/yourusername/xeno-crm/discussions)'
+
+- 🎥 Video Representation of the CRM Project
+
+
+https://github.com/user-attachments/assets/7e691c1d-0d31-4919-baf7-4ed866d51482
+
+
 
 ---
 
