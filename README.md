@@ -408,9 +408,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Documentation**: Check the repository for detailed guides
-- **Issues**: Report bugs on GitHub Issues
-- **Security**: For security issues, please email directly instead of public issues
+- **Documentation**: Check the `/docs` folder for detailed guides
+- **Issues**: Report bugs on [GitHub Issues](https://github.com/yourusername/xeno-crm/issues)
+- **Discussions**: Join [GitHub Discussions](https://github.com/yourusername/xeno-crm/discussions)
 
 ---
 
