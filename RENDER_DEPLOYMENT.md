@@ -36,7 +36,7 @@ Go to your backend service settings and add these environment variables:
 ```bash
 NODE_ENV=production
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/xenocrm?retryWrites=true&w=majority
+MONGODB_URI=yourmongodb_url
 REDIS_URI=rediss://username:password@host:port
 GEMINI_API_KEY=your_gemini_api_key_here
 GOOGLE_CLIENT_ID=your_google_client_id_here
