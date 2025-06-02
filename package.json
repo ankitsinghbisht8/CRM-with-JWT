@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "faker": "^6.6.6",
+    "mongodb": "^6.16.0",
+    "redis": "^5.1.1"
+  }
+}

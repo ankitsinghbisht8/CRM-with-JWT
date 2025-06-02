@@ -1,0 +1,17 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+redis-test.js
+mongo-test.js
+docker-compose.yml
+seed-data.js
+seed.js
+seedOrders.js
+security-checklist.md
+render.yaml
+# Dependencies
+node_modules/
+
+# Docker
+docker-compose.yml 
