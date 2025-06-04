@@ -10,7 +10,7 @@ const api = axios.create({
   }
 });
 
-// Add token to requests
+// Add token to requests, Token request ke headers me automatically chala jaata hai
 api.interceptors.request.use(
   (config) => {
     const token = getToken();

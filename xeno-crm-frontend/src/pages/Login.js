@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../utils/auth';
+import { setToken } from '../utils/auth'; //to store the JWT token
 import api from '../services/api';
 
 const Login = ({ setUser }) => {
@@ -12,7 +12,7 @@ const Login = ({ setUser }) => {
   useEffect(() => {
     // Verify Google Client ID is available
     if (!process.env.REACT_APP_GOOGLE_CLIENT_ID) {
-      console.error('Error: REACT_APP_GOOGLE_CLIENT_ID is not set in environment variables');
+      // console.error('Error: REACT_APP_GOOGLE_CLIENT_ID is not set in environment variables');
       setError('Authentication configuration error. Please contact support.');
     }
   }, []);
@@ -20,15 +20,16 @@ const Login = ({ setUser }) => {
   const handleGoogleSuccess = async (credentialResponse) => {
     setLoading(true);
     setError('');
+    //credentialResponse is an object returned by the Google Login component when the user successfully signs in it includes CredentialId,credentails(JWT token) , user
     
     try {
-      const response = await api.post('/api/auth/google', {
-        token: credentialResponse.credential
+      const response = await api.post('/api/auth/google', { //Receive + verify token
+        token: credentialResponse.credential //send the credentails ( JWT )to backend at /api/auth/google and waha verify hoga
       });
       
       const { user, token } = response.data;
       
-      // Store token and user info
+      // Store token and user info and Sets the global user state
       setToken(token);
       setUser(user);
       
@@ -79,10 +80,10 @@ const Login = ({ setUser }) => {
             <div className="loading">
               <p>Signing you in...</p>
             </div>
-          ) : (
-            <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
+          ) : (//this will return an object credentailResponse
+            <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}> 
+              <GoogleLogin //it provides context using client ID
+                onSuccess={handleGoogleSuccess} //function calling here when user clicks 
                 onError={handleGoogleError}
                 useOneTap
                 theme="outline"
