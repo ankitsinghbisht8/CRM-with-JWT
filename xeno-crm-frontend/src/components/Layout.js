@@ -17,6 +17,7 @@ const Layout = ({ user, children }) => {
     if (user?.email) {
       return user.email[0].toUpperCase();
     }
+    //fallback if no username or email so this runs
     return 'U';
   };
 
@@ -27,6 +28,7 @@ const Layout = ({ user, children }) => {
       const index = user.email.charCodeAt(0) % colors.length;
       return colors[index];
     }
+    //falback if no email available 
     return '#4f46e5';
   };
   
