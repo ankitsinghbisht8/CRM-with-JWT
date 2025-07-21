@@ -44,6 +44,11 @@ Background Workers:
 └─────────────────┘    └─────────────────┘
 ```
 
+## Architecture Overview Image 
+
+![Screenshot 2025-06-05 172839](https://github.com/user-attachments/assets/d53dfaf7-e3dd-41bb-8ab8-f4851fc9ae42)
+
+
 ## 🌟 Features
 
 ### Core CRM Functionality
