@@ -4,8 +4,8 @@ import { updateDeliveryStatusBatch } from '../controllers/deliveryController.js'
 const STREAM_NAME = 'deliveryStream';
 const GROUP_NAME = 'deliveryGroup';
 const CONSUMER_NAME = `consumer-${Math.floor(Math.random() * 1000)}`;
-const BATCH_SIZE = 50;
-const BATCH_INTERVAL = 2000;
+const BATCH_SIZE = 50; // Process 50 at a time for batch processing 
+const BATCH_INTERVAL = 2000; // 2 seconds 
 
 let deliveryUpdates = [];
 let batchTimer = null;
@@ -34,7 +34,7 @@ const consumeDeliveryReceipts = async () => {
       'GROUP', GROUP_NAME, CONSUMER_NAME,
       'COUNT', BATCH_SIZE,
       'BLOCK', 1000, // Reduced block time to 1 second
-      'STREAMS', STREAM_NAME, '>'
+      'STREAMS', STREAM_NAME, '>' // > means new messages only 
     );
     
     if (!streams || !streams.length || !streams[0][1].length) {

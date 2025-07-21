@@ -35,10 +35,28 @@ app.use('/api/delivery-receipt', deliveryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/generate-messages', aiRoutes);
 
-// Health check endpoint
+// Health check endpoint for load balancer
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    service: 'xeno-crm-backend',
+    version: process.env.npm_package_version || '1.0.0'
+  });
+});
+
+// Basic health check endpoint (backward compatibility)
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
 
 // Start the server
 app.listen(PORT, () => {

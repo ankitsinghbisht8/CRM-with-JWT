@@ -4,7 +4,7 @@ import Customer from '../models/Customer.js';
 const STREAM_NAME = 'customerStream';
 const GROUP_NAME = 'customerGroup';
 const CONSUMER_NAME = `consumer-${Math.floor(Math.random() * 1000)}`;
-const BATCH_SIZE = 1; // Process one at a time for immediate processing
+const BATCH_SIZE = 1; // Process one at a time for immediate processing but it is not batch just for testing 
 
 export const startCustomerConsumer = async () => {
   try {
@@ -27,7 +27,7 @@ const consumeCustomers = async () => {
       'GROUP', GROUP_NAME, CONSUMER_NAME,
       'COUNT', BATCH_SIZE,
       'BLOCK', 100, // Block for only 100ms for faster processing
-      'STREAMS', STREAM_NAME, '>'
+      'STREAMS', STREAM_NAME, '>' // > means new messages only 
     );
     
     if (!streams || !streams.length || !streams[0][1].length) {
