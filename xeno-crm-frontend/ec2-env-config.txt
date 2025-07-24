@@ -1,0 +1,4 @@
+# Frontend Environment Variables for EC2 Deployment
+# Copy this content to a .env file in the xeno-crm-frontend directory
+
+REACT_APP_API_URL=http://54.177.168.131:5000 
