@@ -78,9 +78,9 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>Xeno CRM</h1>
+          <h1>CRM</h1>
           <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-          <p>{isLogin ? 'Sign in to your account' : 'Get started with Xeno CRM'}</p>
+          <p>{isLogin ? 'Sign in to your account' : 'Get started with CRM'}</p>
         </div>
         
         {error && (

@@ -36,7 +36,7 @@ const Layout = ({ user, onUserUpdate, children }) => {
         <div className="container flex items-center justify-between">
           <div className="logo">
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h1 style={{ color: '#4f46e5', margin: 0 }}>Xeno CRM</h1>
+              <h1 style={{ color: '#4f46e5', margin: 0 }}>CRM</h1>
             </Link>
           </div>
           
