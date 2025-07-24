@@ -2,14 +2,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../utils/auth';
 
-const Layout = ({ user, children }) => {
+const Layout = ({ user, onUserUpdate, children }) => {
   const location = useLocation();
   
   const isActive = (path) => {
     return location.pathname === path ? 'nav-link active' : 'nav-link';
   };
 
-  // Get user initials for fallback
+  // Get user initials for avatar
   const getUserInitials = (user) => {
     if (user?.name) {
       return user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -17,18 +17,16 @@ const Layout = ({ user, children }) => {
     if (user?.email) {
       return user.email[0].toUpperCase();
     }
-    //fallback if no username or email so this runs
     return 'U';
   };
 
-  // Generate a simple avatar background color based on user
+  // Generate avatar background color
   const getAvatarColor = (user) => {
     if (user?.email) {
       const colors = ['#4f46e5', '#059669', '#dc2626', '#7c2d12', '#1e40af', '#be123c'];
       const index = user.email.charCodeAt(0) % colors.length;
       return colors[index];
     }
-    //falback if no email available 
     return '#4f46e5';
   };
   
@@ -43,25 +41,22 @@ const Layout = ({ user, children }) => {
           </div>
           
           {user && (
-            <div className="user-info flex items-center gap-2">
-              <div 
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: getAvatarColor(user),
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}
-              >
-                {getUserInitials(user)}
+            <div className="user-info">
+              <div className="user-avatar">
+                <div 
+                  className="avatar"
+                  style={{
+                    backgroundColor: getAvatarColor(user)
+                  }}
+                >
+                  {getUserInitials(user)}
+                </div>
               </div>
-              <span style={{ marginRight: '1rem' }}>{user.name || user.email}</span>
-              <button onClick={logout} className="btn btn-secondary">
+              <div className="user-details">
+                <span className="user-name">{user.name}</span>
+                <span className="user-email">{user.email}</span>
+              </div>
+              <button onClick={logout} className="btn btn-logout">
                 Logout
               </button>
             </div>
@@ -69,23 +64,23 @@ const Layout = ({ user, children }) => {
         </div>
       </header>
       
-      <div className="main-layout flex">
+      <div className="app-body">
         <aside className="sidebar">
           <nav>
             <Link to="/" className={isActive('/')}>
-              Dashboard
+              📊 Dashboard
             </Link>
             <Link to="/customers" className={isActive('/customers')}>
-              Customers
+              👥 Customers
             </Link>
             <Link to="/orders" className={isActive('/orders')}>
-              Orders
+              📦 Orders
             </Link>
             <Link to="/segments/create" className={isActive('/segments/create')}>
-              Create Campaign
+              🎯 Create Campaign
             </Link>
             <Link to="/campaigns" className={isActive('/campaigns')}>
-              Campaign History
+              📈 Campaign History
             </Link>
           </nav>
         </aside>
@@ -105,20 +100,110 @@ const Layout = ({ user, children }) => {
         }
         
         .header {
-          background: white;
+          background-color: white;
           border-bottom: 1px solid #e5e7eb;
           padding: 1rem 0;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
-        .main-layout {
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+          width: 100%;
+        }
+        
+        .flex {
+          display: flex;
+        }
+        
+        .items-center {
+          align-items: center;
+        }
+        
+        .justify-between {
+          justify-content: space-between;
+        }
+        
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+        
+        .user-avatar {
+          display: flex;
+          align-items: center;
+        }
+        
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        
+        .user-details {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .user-name {
+          font-weight: 600;
+          color: #1f2937;
+          font-size: 14px;
+        }
+        
+        .user-email {
+          font-size: 12px;
+          color: #6b7280;
+        }
+        
+        .btn {
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          border: none;
+          text-decoration: none;
+          font-size: 14px;
+        }
+        
+        .btn-logout {
+          background-color: #f3f4f6;
+          color: #374151;
+        }
+        
+        .btn-logout:hover {
+          background-color: #e5e7eb;
+          color: #1f2937;
+        }
+        
+        .app-body {
           flex: 1;
+          display: flex;
         }
         
         .sidebar {
           width: 250px;
-          background: white;
+          background-color: white;
           border-right: 1px solid #e5e7eb;
           padding: 2rem 0;
+        }
+        
+        .sidebar nav {
+          display: flex;
+          flex-direction: column;
         }
         
         .nav-link {
@@ -127,23 +212,55 @@ const Layout = ({ user, children }) => {
           color: #6b7280;
           text-decoration: none;
           transition: all 0.2s;
+          font-weight: 500;
         }
         
         .nav-link:hover {
           background-color: #f3f4f6;
-          color: #4f46e5;
+          color: #1f2937;
         }
         
         .nav-link.active {
-          background-color: #eef2ff;
-          color: #4f46e5;
-          border-right: 3px solid #4f46e5;
+          background-color: #4f46e5;
+          color: white;
         }
         
         .main-content {
           flex: 1;
-          padding: 2rem 0;
+          padding: 2rem;
           background-color: #f9fafb;
+          overflow-y: auto;
+        }
+        
+        @media (max-width: 768px) {
+          .app-body {
+            flex-direction: column;
+          }
+          
+          .sidebar {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+          }
+          
+          .sidebar nav {
+            flex-direction: row;
+            overflow-x: auto;
+          }
+          
+          .nav-link {
+            white-space: nowrap;
+            padding: 0.5rem 1rem;
+          }
+          
+          .user-info {
+            gap: 0.5rem;
+          }
+          
+          .user-details {
+            display: none;
+          }
         }
       `}</style>
     </div>

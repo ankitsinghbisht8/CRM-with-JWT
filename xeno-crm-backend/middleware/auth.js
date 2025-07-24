@@ -1,50 +1,99 @@
-import { OAuth2Client } from 'google-auth-library';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
 
-// Verify environment variables
-if (!process.env.GOOGLE_CLIENT_ID) {
-  console.error('Error: GOOGLE_CLIENT_ID is not set in environment variables');
-  process.exit(1);
-}
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-// console.log("Hello")
-// console.log(process.env.GOOGLE_CLIENT_ID);
-
-// Middleware to verify Google OAuth token
+// Verify JWT token middleware
 export const verifyToken = async (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization;
+    let token;
     
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'Authentication required' });
+    // Get token from header
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
     }
     
-    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Access denied. No token provided.' 
+      });
+    }
     
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID
-    });
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    const payload = ticket.getPayload();
+    // Check if user still exists
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Token is invalid. User no longer exists.' 
+      });
+    }
     
-    // Add user info to request object
+    // Add user info to request
     req.user = {
-      email: payload.email,
-      name: payload.name,
-      picture: payload.picture,
-      sub: payload.sub
+      userId: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role
     };
     
     next();
   } catch (error) {
-    console.error('Authentication error:', error);
-    return res.status(401).json({ message: 'Invalid or expired token' });
+    console.error('Auth middleware error:', error);
+    
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid token' 
+      });
+    }
+    
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Token has expired' 
+      });
+    }
+    
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Authentication error' 
+    });
   }
 };
 
-export default verifyToken;
+// Optional authentication middleware (doesn't fail if no token)
+export const optionalAuth = async (req, res, next) => {
+  try {
+    let token;
+    
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+    
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
+      
+      if (user) {
+        req.user = {
+          userId: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role
+        };
+      }
+    }
+    
+    next();
+  } catch (error) {
+    // Continue without authentication for optional routes
+    next();
+  }
+};
+
+export default verifyToken; 

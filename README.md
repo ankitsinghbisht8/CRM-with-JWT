@@ -61,7 +61,7 @@ Background Workers:
 - **AI-Powered Message Generation**: Google Gemini integration for creative campaign content
 - **Smart Segmentation**: Rule-based customer segmentation with multiple criteria
 - **Campaign Delivery**: Automated campaign delivery with Redis-based queue processing
-- **Google OAuth**: Secure authentication with Google Sign-In
+- **JWT Authentication**: Secure JWT-based authentication with login/register
 - **Real-time Updates**: Live campaign delivery status and analytics
 
 ### Technical Features
@@ -77,7 +77,7 @@ Background Workers:
 - **React 18** - Modern JavaScript library with hooks
 - **React Router v6** - Client-side routing
 - **Axios** - HTTP client for API communication
-- **Google OAuth** - Authentication integration
+- **JWT Authentication** - Secure login/register system
 - **CSS3** - Modern styling with Flexbox/Grid, responsive design
 
 ### Backend Technologies
@@ -140,15 +140,12 @@ PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 REDIS_URI=your_redis_connection_string
 GEMINI_API_KEY=your_gemini_api_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
 JWT_SECRET=your_jwt_secret_32_characters_minimum
 ```
 
 Create `.env` file in `xeno-crm-frontend/`:
 ```env
 REACT_APP_API_URL=http://localhost:5001
-REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
 ```
 
 3. **Run with Docker**
@@ -199,15 +196,6 @@ npm run workers
 
 ### Required Service Setup
 
-#### Google OAuth Setup
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add authorized redirect URIs:
-   - `http://localhost:3000` and `http://localhost:3001` (development)
-   - Your production domain
-
 #### Google AI Setup
 1. Go to [Google AI Studio](https://aistudio.google.com/)
 2. Create an API key for Gemini
@@ -224,7 +212,7 @@ npm run workers
 1. **Push to GitHub** and connect to Render
 2. **Use Blueprint deployment** with the included `render.yaml`
 3. **Set environment variables** in Render dashboard
-4. **Update Google OAuth** redirect URIs for production domain
+4. **Test the application** to ensure JWT authentication works properly
 
 Detailed deployment guide: [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md)
 
@@ -232,7 +220,8 @@ Detailed deployment guide: [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md)
 
 ### Authentication
 ```bash
-POST /api/auth/google          # Google OAuth login
+POST /api/auth/login           # User login with email/password
+POST /api/auth/register        # User registration
 GET  /api/auth/me              # Get current user
 ```
 
@@ -284,15 +273,12 @@ POST   /api/segment/preview    # Preview customer segment
 | `MONGODB_URI` | MongoDB connection string | `mongodb+srv://...` | Yes |
 | `REDIS_URI` | Redis connection string | `redis://...` | Yes |
 | `GEMINI_API_KEY` | Google AI API key | `AIz...` | Yes |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID | `123...` | Yes |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret | `GXY...` | Yes |
 | `JWT_SECRET` | JWT signing secret (32+ chars) | `your-secret-key` | Yes |
 
 #### Frontend (.env)
 | Variable | Description | Example | Required |
 |----------|-------------|---------|----------|
 | `REACT_APP_API_URL` | Backend API URL | `http://localhost:5001` | Yes |
-| `REACT_APP_GOOGLE_CLIENT_ID` | Google OAuth client ID | `123...` | Yes |
 
 ## 📊 Features Overview
 

@@ -27,12 +27,12 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/segment', segmentRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api/delivery-receipt', deliveryRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/generate-messages', aiRoutes);
 
 // Health check endpoint for load balancer

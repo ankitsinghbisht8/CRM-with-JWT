@@ -1,16 +1,23 @@
 import express from 'express';
 import {
-  verifyGoogleToken,
-  getCurrentUser
+  register,
+  login,
+  getProfile,
+  updateProfile
 } from '../controllers/authController.js';
-import verifyToken from '../middleware/auth.js';
+import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Public routes
-router.post('/google', verifyGoogleToken);
+router.post('/register', register);
+router.post('/login', login);
 
 // Protected routes
-router.get('/me', verifyToken, getCurrentUser);
+router.get('/profile', verifyToken, getProfile);
+router.put('/profile', verifyToken, updateProfile);
 
-export default router;
+// Legacy route for compatibility
+router.get('/me', verifyToken, getProfile);
+
+export default router; 

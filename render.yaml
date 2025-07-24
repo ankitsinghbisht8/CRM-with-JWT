@@ -1,0 +1,38 @@
+services:
+  # Backend Service
+  - type: web
+    name: xeno-crm-backend
+    env: node
+    buildCommand: cd xeno-crm-backend && npm install
+    startCommand: cd xeno-crm-backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: REDIS_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+  # Frontend Service  
+  - type: static_site
+    name: xeno-crm-frontend
+    buildCommand: cd xeno-crm-frontend && npm install && npm run build
+    publishPath: xeno-crm-frontend/build
+    routes:
+      - source: /*
+        destination: /index.html
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://xeno-crm-backend.onrender.com
+      - key: REACT_APP_GOOGLE_CLIENT_ID
+        sync: false 

@@ -2,16 +2,49 @@
 .env
 .env.local
 .env.*.local
+.env.production
+.env.development
+
+# Development files
 redis-test.js
 mongo-test.js
-docker-compose.yml
 seed-data.js
 seed.js
 seedOrders.js
 security-checklist.md
-render.yaml
+
+# Docker files with credentials
+docker-compose.yml
+docker-compose.override.yml
+
 # Dependencies
 node_modules/
 
-# Docker
-docker-compose.yml 
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+build/
+dist/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp 

@@ -9,7 +9,6 @@ This guide will help you deploy your Xeno CRM application to Render using the ex
 3. **External Services**: 
    - MongoDB Atlas account with database set up
    - Redis Cloud account with instance created
-   - Google OAuth credentials configured
 
 ## Step 1: Prepare Your Repository
 
@@ -39,8 +38,6 @@ PORT=5000
 MONGODB_URI=yourmongodb_url
 REDIS_URI=rediss://username:password@host:port
 GEMINI_API_KEY=your_gemini_api_key_here
-GOOGLE_CLIENT_ID=your_google_client_id_here
-GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 JWT_SECRET=your_jwt_secret_here_minimum_32_characters
 ```
 
@@ -50,10 +47,7 @@ The frontend service already has these configured in `render.yaml`:
 
 ```bash
 REACT_APP_API_URL=https://xeno-crm-backend.onrender.com
-REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id_here
 ```
-
-**⚠️ Important**: You'll need to update the `render.yaml` file to use your actual Google Client ID instead of the placeholder.
 
 ## Step 4: Update Backend URL
 
@@ -61,18 +55,7 @@ REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id_here
 2. Note the URL assigned to your backend (e.g., `https://xeno-crm-backend-xyz.onrender.com`)
 3. Update the frontend environment variable `REACT_APP_API_URL` with the actual backend URL
 
-## Step 5: Configure Google OAuth
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Navigate to **APIs & Services** → **Credentials**
-3. Edit your OAuth 2.0 client
-4. Add your Render URLs to authorized origins and redirect URIs:
-   - **Authorized JavaScript origins**:
-     - `https://your-frontend-url.onrender.com`
-   - **Authorized redirect URIs**:
-     - `https://your-frontend-url.onrender.com`
-
-## Step 6: Deploy
+## Step 5: Deploy
 
 1. Click **"Create Blueprint"** in Render
 2. Both services will start building automatically
@@ -101,7 +84,7 @@ npm run seed:orders
 
 ### 2. Test the Application
 1. Visit your frontend URL
-2. Test Google OAuth login
+2. Test user registration and login
 3. Verify all features work correctly
 
 ## Environment Variables Reference
@@ -119,8 +102,7 @@ REDIS_URI=rediss://username:password@host:port
 GEMINI_API_KEY=your_gemini_api_key_here
 
 # OAuth
-GOOGLE_CLIENT_ID=your_google_client_id_here
-GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
 
 # Security
 JWT_SECRET=your_jwt_secret_here_minimum_32_characters

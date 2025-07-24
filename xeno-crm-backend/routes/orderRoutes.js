@@ -6,7 +6,7 @@ import {
   updateOrder,
   deleteOrder
 } from '../controllers/orderController.js';
-import verifyToken from '../middleware/auth.js';
+import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
